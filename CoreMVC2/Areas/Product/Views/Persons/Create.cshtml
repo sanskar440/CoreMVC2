@@ -1,0 +1,80 @@
+﻿@model DataAccess.Models.Persons
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Persons</h4>
+<hr />
+<div class="container">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter first name" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter last name" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address)
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Enter address" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.City)
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control", @placeholder = "Enter city" })
+                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SelectedOption)
+                <select asp-for="SelectedOption" class="form-control" id="dropdown"></select>
+            </div>
+
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Index", "Index")
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Fetch dropdown options via AJAX
+        $.ajax({
+            url: 'D:\CoreMVC2\CoreMVC2\CoreMVC2\Areas\JsonData\Myjson.json',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var dropdown = $('#dropdown');
+                $.each(data, function (key, value) {
+                    dropdown.append($('<option></option>').attr('value', value.id).text(value.name));
+                });
+            },
+            error: function () {
+                alert('Failed to load dropdown options.');
+            }
+        });
+    });
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

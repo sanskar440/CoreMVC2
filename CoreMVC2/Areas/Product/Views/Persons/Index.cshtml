@@ -1,0 +1,109 @@
+﻿@model CoreMVC2.Areas.Product.Controllers.PersonViewModel
+
+<!-- Your view code here -->
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+<h1>Student Registration Form</h1>
+
+<div class="text-end mb-2">
+    @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-success" })
+</div>
+
+@using (Html.BeginForm("Index", "Persons", FormMethod.Get))
+{
+    <div class="input-group mb-3">
+        <input class="form-control" type="text" name="search" placeholder="Search" value="@ViewBag.Search" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table table-bordered table-striped mt-5">
+    <thead>
+        <tr>
+            <th>
+                <a href="@Url.Action("Index", "Persons", new { page = ViewBag.Page, search = ViewBag.Search, sortby = "FirstName", orderBy = ViewBag.OrderBy })">
+                    First Name <i class="fas fa-sort"></i>
+
+                </a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", "Persons", new { page = ViewBag.Page, search = ViewBag.Search, sortby = "LastName", orderBy = ViewBag.OrderBy })">
+                    Last Name  <i class="fas fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", "Persons", new { page = ViewBag.Page, search = ViewBag.Search, sortby = "Address", orderBy = ViewBag.OrderBy })">
+                    Address  <i class="fas fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", "Persons", new { page = ViewBag.Page, search = ViewBag.Search, sortby = "City", orderBy = ViewBag.OrderBy })">
+                    City  <i class="fas fa-sort"></i>
+                </a>
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Persons)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PersonID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PersonID }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
+
+
+
+@* 
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.Page == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", "Persons", new { page = 1, search = ViewBag.Search })">Previous</a>
+        </li>
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.Page == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", "Persons", new { page = i, search = ViewBag.Search })">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.Page == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", "Persons", new { page = ViewBag.Page + 1, search = ViewBag.Search })">Next</a>
+        </li>
+    </ul>
+</nav>
+ *@
+
+
+
+
+
+
